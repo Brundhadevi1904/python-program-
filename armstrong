@@ -1,0 +1,29 @@
+#include <stdio.h>
+#include <math.h>
+
+int main() {
+    int num, originalNum, remainder, result = 0, n = 0;
+    num = 153;
+    originalNum = num;
+
+    // Count number of digits
+    for (originalNum = num; originalNum != 0; ++n) {
+        originalNum /= 10;
+    }
+
+    originalNum = num;
+
+    // Calculate sum of digits raised to power n
+    while (originalNum != 0) {
+        remainder = originalNum % 10;
+        result += pow(remainder, n);
+        originalNum /= 10;
+    }
+
+    if (result == num)
+        printf("%d is an Armstrong number.", num);
+    else
+        printf("%d is not.", num);
+
+    return 0;
+}
