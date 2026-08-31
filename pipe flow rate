@@ -1,0 +1,32 @@
+#include <stdio.h>
+#include <math.h> // Required for pow() function to calculate exponents
+
+int main() {
+    float roughness_n, hydraulic_radius_R, bed_slope_S;
+    float velocity_V, cross_sectional_area_A, discharge_Q;
+
+    printf("=== HYDRAULIC DISCHARGE CALCULATOR (MANNING'S) ===\n");
+    printf("Enter Manning's roughness coefficient (n) (e.g., 0.013 for concrete): ");
+    scanf("%f", &roughness_n);
+
+    printf("Enter Hydraulic Radius (R) in meters: ");
+    scanf("%f", &hydraulic_radius_R);
+
+    printf("Enter Bed Slope (S) as a decimal (e.g., 0.002): ");
+    scanf("%f", &bed_slope_S);
+
+    printf("Enter Cross-sectional Area of Flow (A) in sq. meters: ");
+    scanf("%f", &cross_sectional_area_A);
+
+    // Manning's Equation for Velocity: V = (1/n) * R^(2/3) * S^(1/2)
+    velocity_V = (1.0 / roughness_n) * pow(hydraulic_radius_R, 2.0 / 3.0) * pow(bed_slope_S, 0.5);
+    
+    // Discharge / Flow Rate Equation: Q = A * V
+    discharge_Q = cross_sectional_area_A * velocity_V;
+
+    printf("\n=== FLOW RESULTS ===\n");
+    printf("Flow Velocity (V) = %.3f m/s\n", velocity_V);
+    printf("Total Discharge (Q) = %.3f m³/s (or liters/sec: %.1f)\n", discharge_Q, discharge_Q * 1000);
+
+    return 0;
+}
