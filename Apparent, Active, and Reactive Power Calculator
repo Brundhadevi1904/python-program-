@@ -1,0 +1,38 @@
+#include <stdio.h>
+#include <math.h>
+
+int main() {
+    float voltage, current, power_factor;
+    float active_power, reactive_power, apparent_power;
+
+    printf("=== ELECTRICAL POWER TRIANGLE CALCULATOR ===\n");
+    printf("Enter RMS Voltage (V) in Volts: ");
+    scanf("%f", &voltage);
+
+    printf("Enter RMS Current (I) in Amperes: ");
+    scanf("%f", &current);
+
+    printf("Enter Power Factor (cos phi) between 0 and 1: ");
+    scanf("%f", &power_factor);
+
+    if (power_factor < 0.0 || power_factor > 1.0) {
+        printf("Error! Power factor must be between 0 and 1.\n");
+    } else {
+        // Apparent Power S = V * I
+        apparent_power = voltage * current;
+        
+        // Active Power P = V * I * cos(phi)
+        active_power = apparent_power * power_factor;
+        
+        // Reactive Power Q = V * I * sin(phi) -> sin(phi) = sqrt(1 - cos^2(phi))
+        float sin_phi = sqrt(1.0 - pow(power_factor, 2));
+        reactive_power = apparent_power * sin_phi;
+
+        printf("\n=== POWER BREAKDOWN ===\n");
+        printf("Apparent Power (S) : %.2f VA  (or %.2f kVA)\n", apparent_power, apparent_power / 1000.0);
+        printf("Active Power (P)   : %.2f W   (or %.2f kW)\n", active_power, active_power / 1000.0);
+        printf("Reactive Power (Q) : %.2f VAR (or %.2f kVAR)\n", reactive_power, reactive_power / 1000.0);
+    }
+
+    return 0;
+}
