@@ -1,0 +1,44 @@
+#include <stdio.h>
+#include <math.h> // Required for M_PI and pow()
+
+int main() {
+    float load_kN, diameter_mm, original_length_mm, youngs_modulus_GPa;
+    float area_m2, load_N, stress_MPa, strain, elongation_mm;
+
+    printf("=== AXIAL STRESS AND DEFORMATION CALCULATOR ===\n");
+    printf("Enter tensile load (in kN): ");
+    scanf("%f", &load_kN);
+
+    printf("Enter rod diameter (in mm): ");
+    scanf("%f", &diameter_mm);
+
+    printf("Enter original length of the rod (in mm): ");
+    scanf("%f", &original_length_mm);
+
+    printf("Enter Young's Modulus of the material (in GPa, e.g., 200 for Steel): ");
+    scanf("%f", &youngs_modulus_GPa);
+
+    // Convert load to Newtons and dimensions to meters for calculation
+    load_N = load_kN * 1000.0;
+    float diameter_m = diameter_mm / 1000.0;
+    
+    // Cross-sectional Area = (pi * d^2) / 4
+    area_m2 = (M_PI * pow(diameter_m, 2)) / 4.0;
+
+    // Stress = Force / Area (N/m2 or Pascals). Divide by 10^6 for MegaPascals (MPa)
+    stress_MPa = (load_N / area_m2) / 1000000.0;
+
+    // Strain = Stress / Young's Modulus (Convert GPa to MPa by multiplying by 1000)
+    strain = stress_MPa / (youngs_modulus_GPa * 1000.0);
+
+    // Elongation = Strain * Original Length
+    elongation_mm = strain * original_length_mm;
+
+    printf("\n=== MECHANICAL ANALYSIS REPORT ===\n");
+    printf("Cross-sectional Area : %.6f m²\n", area_m2);
+    printf("Normal Axial Stress  : %.2f MPa (N/mm²)\n", stress_MPa);
+    printf("Longitudinal Strain  : %.6f (dimensionless)\n", strain);
+    printf("Total Elongation     : %.4f mm\n", elongation_mm);
+
+    return 0;
+}
