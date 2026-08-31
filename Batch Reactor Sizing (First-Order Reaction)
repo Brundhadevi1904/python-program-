@@ -1,0 +1,27 @@
+#include <stdio.h>
+#include <math.h> // Required for log()
+
+int main() {
+    float conversion_X, rate_constant_k, residence_time;
+
+    printf("=== BATCH REACTOR TIME CALCULATOR (1st ORDER) ===\n");
+    printf("Enter target fractional conversion (X) (e.g., 0.90 for 90%%): ");
+    scanf("%f", &conversion_X);
+
+    if (conversion_X <= 0.0 || conversion_X >= 1.0) {
+        printf("Error! Conversion must be strictly between 0 and 1.\n");
+        return 1;
+    }
+
+    printf("Enter reaction rate constant k (in min^-1): ");
+    scanf("%f", &rate_constant_k);
+
+    // Formula: t = -ln(1 - X) / k
+    residence_time = -log(1.0 - conversion_X) / rate_constant_k;
+
+    printf("\n=== REACTOR SPECIFICATIONS ===\n");
+    printf("Target Conversion : %.1f%%\n", conversion_X * 100.0);
+    printf("Required Time (t) : %.2f minutes (or %.2f seconds)\n", residence_time, residence_time * 60.0);
+
+    return 0;
+}
