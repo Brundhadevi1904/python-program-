@@ -1,0 +1,35 @@
+#include <stdio.h>
+
+int main() {
+    float density, velocity, diameter, viscosity, reynolds_no;
+
+    printf("=== FLUID FLOW REGIME CLASSIFIER (REYNOLDS NUMBER) ===\n");
+    printf("Enter fluid density (kg/m³): ");
+    scanf("%f", &density);
+
+    printf("Enter average flow velocity (m/s): ");
+    scanf("%f", &velocity);
+
+    printf("Enter inside pipe diameter (meters): ");
+    scanf("%f", &diameter);
+
+    printf("Enter dynamic viscosity (Pa·s or kg/m·s): ");
+    scanf("%f", &viscosity);
+
+    // Reynolds Number calculation
+    reynolds_no = (density * velocity * diameter) / viscosity;
+
+    printf("\n=== FLUID DYNAMICS REPORT ===\n");
+    printf("Calculated Reynolds Number (Re) = %.2f\n", reynolds_no);
+    printf("Flow Regime: ");
+
+    if (reynolds_no < 2100.0) {
+        printf("LAMINAR FLOW\n");
+    } else if (reynolds_no >= 2100.0 && reynolds_no <= 4000.0) {
+        printf("TRANSIENT / CRITICAL FLOW\n");
+    } else {
+        printf("TURBULENT FLOW\n");
+    }
+
+    return 0;
+}
