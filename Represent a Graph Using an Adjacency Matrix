@@ -1,0 +1,79 @@
+#include <stdio.h>
+
+#define MAX_VERTICES 10
+
+// Function to initialize all cells of the matrix to 0
+void initializeMatrix(int matrix[MAX_VERTICES][MAX_VERTICES], int v) {
+    for (int i = 0; i < v; i++) {
+        for (int j = 0; j < v; j++) {
+            matrix[i][j] = 0;
+        }
+    }
+}
+
+// Function to add an edge to an undirected graph
+void addEdge(int matrix[MAX_VERTICES][MAX_VERTICES], int source, int destination) {
+    matrix[source][destination] = 1;
+    matrix[destination][source] = 1; // Because the graph is undirected
+}
+
+// Function to print the graph's matrix layout
+void printMatrix(int matrix[MAX_VERTICES][MAX_VERTICES], int v) {
+    printf("\nGenerated Adjacency Matrix:\n");
+    
+    // Print column headers
+    printf("     ");
+    for (int i = 0; i < v; i++) {
+        printf("[%d] ", i);
+    }
+    printf("\n");
+
+    // Print rows
+    for (int i = 0; i < v; i++) {
+        printf("[%d]  ", i); // Row header
+        for (int j = 0; j < v; j++) {
+            printf(" %d  ", matrix[i][j]);
+        }
+        printf("\n");
+    }
+}
+
+int main() {
+    int adjMatrix[MAX_VERTICES][MAX_VERTICES];
+    int vertices, edges;
+    int source, destination;
+
+    printf("=== GRAPH ADJACENCY MATRIX REPRESENTATION ===\n");
+    printf("Enter the total number of vertices (Max %d): ", MAX_VERTICES);
+    scanf("%d", &vertices);
+
+    if (vertices > MAX_VERTICES || vertices <= 0) {
+        printf("Invalid number of vertices!\n");
+        return 1;
+    }
+
+    // Step 1: Wipe the matrix clean
+    initializeMatrix(adjMatrix, vertices);
+
+    printf("Enter the total number of edges: ");
+    scanf("%d", &edges);
+
+    // Step 2: Loop to accept user defined connection links
+    for (int i = 0; i < edges; i++) {
+        printf("Enter Edge %d (Source Destination): ", i + 1);
+        scanf("%d %d", &source, &destination);
+
+        // Simple validation check for array index range
+        if (source >= vertices || destination >= vertices || source < 0 || destination < 0) {
+            printf("Error: Invalid vertex indices! Re-enter this edge.\n");
+            i--; // Decrement index loop counter to repeat this iteration slot
+        } else {
+            addEdge(adjMatrix, source, destination);
+        }
+    }
+
+    // Step 3: Output the results
+    printMatrix(adjMatrix, vertices);
+
+    return 0;
+}
