@@ -1,0 +1,40 @@
+#include <stdio.h>
+
+int main() {
+    float cohesion_c, unit_weight_gamma, depth_Df, width_B;
+    float Nc, Nq, Ngamma; // Terzaghi's Bearing Capacity factors
+    float ultimate_capacity, safe_capacity, factor_of_safety;
+
+    printf("=== SOIL BEARING CAPACITY CALCULATOR ===\n");
+    printf("Enter Soil Cohesion (c) in kN/m²: ");
+    scanf("%f", &cohesion_c);
+
+    printf("Enter Unit Weight of Soil (gamma) in kN/m³: ");
+    scanf("%f", &unit_weight_gamma);
+
+    printf("Enter Depth of Foundation (Df) in meters: ");
+    scanf("%f", &depth_Df);
+
+    printf("Enter Width of Footing (B) in meters: ");
+    scanf("%f", &width_B);
+
+    printf("Enter Terzaghi factors based on soil friction angle (Nc, Nq, Ngamma):\n");
+    printf("Nc: "); scanf("%f", &Nc);
+    printf("Nq: "); scanf("%f", &Nq);
+    printf("Ngamma: "); scanf("%f", &Ngamma);
+
+    printf("Enter required Factor of Safety (typically 2.5 or 3.0): ");
+    scanf("%f", &factor_of_safety);
+
+    // Terzaghi's ultimate bearing capacity formula for strip footing
+    ultimate_capacity = (cohesion_c * Nc) + (unit_weight_gamma * depth_Df * Nq) + (0.5 * unit_weight_gamma * width_B * Ngamma);
+    
+    // Safe bearing capacity calculation
+    safe_capacity = ultimate_capacity / factor_of_safety;
+
+    printf("\n=== GEOTECHNICAL REPORT ===\n");
+    printf("Ultimate Bearing Capacity (q_ult) = %.2f kN/m²\n", ultimate_capacity);
+    printf("Safe Bearing Capacity (q_safe)     = %.2f kN/m²\n", safe_capacity);
+
+    return 0;
+}
