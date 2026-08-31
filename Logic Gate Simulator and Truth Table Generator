@@ -1,0 +1,39 @@
+#include <stdio.h>
+
+int main() {
+    int gateChoice;
+
+    printf("=== DIGITAL LOGIC GATE SIMULATOR ===\n");
+    printf("Select a gate to evaluate:\n");
+    printf("1. AND\n2. OR\n3. XOR\n4. NAND\n5. NOR\n6. XNOR\n");
+    printf("Enter choice (1-6): ");
+    scanf("%d", &gateChoice);
+
+    if (gateChoice < 1 || gateChoice > 6) {
+        printf("Invalid selection!\n");
+        return 1;
+    }
+
+    printf("\n--- Truth Table ---\n");
+    printf(" A | B | Output \n");
+    printf("----------------\n");
+
+    // Loop through all possible combinations of 2 binary inputs
+    for (int A = 0; A <= 1; A++) {
+        for (int B = 0; B <= 1; B++) {
+            int out = 0;
+
+            switch (gateChoice) {
+                case 1: out = A & B; break;          // AND bitwise logic
+                case 2: out = A | B; break;          // OR bitwise logic
+                case 3: out = A ^ B; break;          // XOR bitwise logic
+                case 4: out = !(A & B); break;       // NAND logic
+                case 5: out = !(A | B); break;       // NOR logic
+                case 6: out = !(A ^ B); break;       // XNOR logic
+            }
+            
+            printf(" %d | %d |   %d   \n", A, B, out);
+        }
+    }
+    return 0;
+}
