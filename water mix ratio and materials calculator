@@ -1,0 +1,41 @@
+#include <stdio.h>
+
+int main() {
+    float wet_volume, dry_volume;
+    float cement_part, sand_part, aggregate_part, total_parts;
+    float cement_qty, sand_qty, aggregate_qty;
+    int bags_of_cement;
+
+    printf("=== CONCRETE MATERIAL ESTIMATOR ===\n");
+    printf("Enter required wet volume of concrete (in cubic meters): ");
+    scanf("%f", &wet_volume);
+
+    // Concrete shrinks when wet. Dry volume is taken as 1.54 times the wet volume.
+    dry_volume = wet_volume * 1.54;
+
+    printf("Enter Mix Ratio (Cement : Sand : Aggregate)\n");
+    printf("Cement part: ");
+    scanf("%f", &cement_part);
+    printf("Sand part: ");
+    scanf("%f", &sand_part);
+    printf("Aggregate part: ");
+    scanf("%f", &aggregate_part);
+
+    total_parts = cement_part + sand_part + aggregate_part;
+
+    // Calculate individual volumes
+    cement_qty = (cement_part / total_parts) * dry_volume;
+    sand_qty = (sand_part / total_parts) * dry_volume;
+    aggregate_qty = (aggregate_part / total_parts) * dry_volume;
+
+    // 1 bag of cement is approximately 0.035 cubic meters
+    bags_of_cement = cement_qty / 0.035;
+
+    printf("\n=== MATERIAL REQUIRED ===\n");
+    printf("Dry Volume of Concrete: %.2f m³\n", dry_volume);
+    printf("Cement required: %.2f m³ (~%d bags)\n", cement_qty, bags_of_cement);
+    printf("Sand required: %.2f m³\n", sand_qty);
+    printf("Coarse Aggregate required: %.2f m³\n", aggregate_qty);
+
+    return 0;
+}
