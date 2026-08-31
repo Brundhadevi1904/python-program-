@@ -1,0 +1,49 @@
+#include <stdio.h>
+
+int main() {
+    int choice;
+    float P, V, m, R, T;
+
+    printf("=== IDEAL GAS STATE CALCULATOR (P*V = m*R*T) ===\n");
+    printf("Select the unknown property to calculate:\n");
+    printf("1. Pressure (P in Pascals)\n");
+    printf("2. Volume (V in m³)\n");
+    printf("3. Mass (m in kg)\n");
+    printf("4. Temperature (T in Kelvin)\n");
+    printf("Enter choice (1-4): ");
+    scanf("%d", &choice);
+
+    // Constants: Air specific gas constant R = 287 J/(kg·K)
+    R = 287.0; 
+
+    switch (choice) {
+        case 1:
+            printf("Enter Volume (m³), Mass (kg), and Temperature (K): ");
+            scanf("%f %f %f", &V, &m, &T);
+            P = (m * R * T) / V;
+            printf("Calculated Pressure (P) = %.2f Pa\n", P);
+            break;
+        case 2:
+            printf("Enter Pressure (Pa), Mass (kg), and Temperature (K): ");
+            scanf("%f %f %f", &P, &m, &T);
+            V = (m * R * T) / P;
+            printf("Calculated Volume (V) = %.4f m³\n", V);
+            break;
+        case 3:
+            printf("Enter Pressure (Pa), Volume (m³), and Temperature (K): ");
+            scanf("%f %f %f", &P, &V, &T);
+            m = (P * V) / (R * T);
+            printf("Calculated Mass (m) = %.4f kg\n", m);
+            break;
+        case 4:
+            printf("Enter Pressure (Pa), Volume (m³), and Mass (kg): ");
+            scanf("%f %f %f", &P, &V, &m);
+            T = (P * V) / (m * R);
+            printf("Calculated Temperature (T) = %.2f Kelvin (%.2f °C)\n", T, T - 273.15);
+            break;
+        default:
+            printf("Invalid selection.\n");
+    }
+
+    return 0;
+}
