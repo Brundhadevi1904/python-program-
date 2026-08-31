@@ -1,0 +1,36 @@
+#include <stdio.h>
+#include <math.h>
+
+int main() {
+    float power_kW, speed_RPM, allowable_shear_stress_MPa;
+    float torque_Nm, allowable_shear_stress_Pa, diameter_m, diameter_mm;
+
+    printf("=== ROTATING TRANSMISSION SHAFT DESIGN ===\n");
+    printf("Enter Power to transmit (in kW): ");
+    scanf("%f", &power_kW);
+
+    printf("Enter Shaft Rotational Speed (in RPM): ");
+    scanf("%f", &speed_RPM);
+
+    printf("Enter Allowable Shear Stress of Material (in MPa, e.g., 40 for structural steel): ");
+    scanf("%f", &allowable_shear_stress_MPa);
+
+    // 1. Calculate Torque: Power = (2 * pi * N * T) / 60
+    // => T = (Power * 60) / (2 * pi * N)
+    float power_W = power_kW * 1000.0;
+    torque_Nm = (power_W * 60.0) / (2.0 * M_PI * speed_RPM);
+
+    // 2. Convert stress back to Pascals (N/m²)
+    allowable_shear_stress_Pa = allowable_shear_stress_MPa * 1000000.0;
+
+    // 3. Torsion Equation for solid shaft: d = cbrt( (16 * T) / (pi * tau) )
+    diameter_m = cbrt((16.0 * torque_Nm) / (M_PI * allowable_shear_stress_Pa));
+    diameter_mm = diameter_m * 1000.0;
+
+    printf("\n=== DRIVE SHAFT SPECIFICATIONS ===\n");
+    printf("Operational Torque      = %.2f N-m\n", torque_Nm);
+    printf("Minimum Solid Diameter  = %.2f mm\n", diameter_mm);
+    printf("Recommended safe size   = %.0f mm (Rounded up)\n", ceil(diameter_mm));
+
+    return 0;
+}
