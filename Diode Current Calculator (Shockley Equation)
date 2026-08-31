@@ -1,0 +1,32 @@
+#include <stdio.h>
+#include <math.h> // Required for exp() function
+
+int main() {
+    float reverse_sat_current, diode_voltage, ideality_factor;
+    float thermal_voltage, diode_current;
+
+    printf("=== DIODE CURRENT CALCULATOR (SHOCKLEY EQUATION) ===\n");
+    printf("Enter Reverse Saturation Current Is (in Amperes, e.g., 1e-12 for 1 pA): ");
+    scanf("%f", &reverse_sat_current);
+
+    printf("Enter Forward Voltage Drop across Diode Vd (in Volts): ");
+    scanf("%f", &diode_voltage);
+
+    printf("Enter Ideality Factor n (typically 1 for Germanium, 2 for Silicon): ");
+    scanf("%f", &ideality_factor);
+
+    // Thermal voltage Vt = k*T/q is approximately 26mV (0.026V) at room temperature (300K)
+    thermal_voltage = 0.026; 
+
+    // Shockley Equation calculation
+    diode_current = reverse_sat_current * (exp(diode_voltage / (ideality_factor * thermal_voltage)) - 1.0);
+
+    printf("\n=== SEMICONDUCTOR OUTPUT ===\n");
+    if (diode_current >= 1.0) {
+        printf("Calculated Diode Current (Id) = %.3f A\n", diode_current);
+    } else {
+        printf("Calculated Diode Current (Id) = %.3f mA\n", diode_current * 1000.0);
+    }
+
+    return 0;
+}
