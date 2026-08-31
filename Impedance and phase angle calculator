@@ -1,0 +1,49 @@
+#include <stdio.h>
+#include <math.h> // Required for M_PI, sqrt(), atan(), and pow()
+
+int main() {
+    float resistance, inductance, capacitance, frequency;
+    float XL, XC, net_reactance, impedance, phase_angle_rad, phase_angle_deg;
+
+    printf("=== AC RLC SERIES CIRCUIT ANALYZER ===\n");
+    printf("Enter Resistance (R) in Ohms: ");
+    scanf("%f", &resistance);
+
+    printf("Enter Inductance (L) in Henrys: ");
+    scanf("%f", &inductance);
+
+    printf("Enter Capacitance (C) in Farads: ");
+    scanf("%f", &capacitance);
+
+    printf("Enter Frequency (f) in Hz: ");
+    scanf("%f", &frequency);
+
+    // Calculate Reactances: XL = 2 * pi * f * L  and  XC = 1 / (2 * pi * f * C)
+    XL = 2 * M_PI * frequency * inductance;
+    XC = 1.0 / (2 * M_PI * frequency * capacitance);
+    
+    net_reactance = XL - XC;
+
+    // Calculate Impedance: Z = sqrt(R^2 + (XL - XC)^2)
+    impedance = sqrt(pow(resistance, 2) + pow(net_reactance, 2));
+
+    // Calculate Phase Angle: theta = atan(Net Reactance / Resistance)
+    phase_angle_rad = atan2(net_reactance, resistance);
+    phase_angle_deg = phase_angle_rad * (180.0 / M_PI); // Convert radians to degrees
+
+    printf("\n=== CIRCUIT ELECTRICAL VALUES ===\n");
+    printf("Inductive Reactance (XL) : %.2f Ohms\n", XL);
+    printf("Capacitive Reactance (XC): %.2f Ohms\n", XC);
+    printf("Total Impedance (Z)      : %.2f Ohms\n", impedance);
+    printf("Phase Angle (theta)      : %.2f degrees ", phase_angle_deg);
+    
+    if (phase_angle_deg > 0) {
+        printf("(Lagging Current / Inductive)\n");
+    } else if (phase_angle_deg < 0) {
+        printf("(Leading Current / Capacitive)\n");
+    } else {
+        printf("(In-phase / Purely Resonant)\n");
+    }
+
+    return 0;
+}
