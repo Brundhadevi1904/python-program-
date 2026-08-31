@@ -1,0 +1,28 @@
+#include <stdio.h>
+
+int main() {
+    float r1, r2, r3; // Star resistances connected to common neutral point
+    float ra, rb, rc; // Equivalent Delta branch resistances
+
+    printf("=== STAR-TO-DELTA RESISTANCE CONVERTOR ===\n");
+    printf("Enter Star Node Resistance R1 (in Ohms): ");
+    scanf("%f", &r1);
+    printf("Enter Star Node Resistance R2 (in Ohms): ");
+    scanf("%f", &r2);
+    printf("Enter Star Node Resistance R3 (in Ohms): ");
+    scanf("%f", &r3);
+
+    // Delta formulas: Ra = R1 + R2 + (R1*R2)/R3, etc.
+    float sum_of_products = (r1 * r2) + (r2 * r3) + (r3 * r1);
+
+    ra = sum_of_products / r3;
+    rb = sum_of_products / r1;
+    rc = sum_of_products / r2;
+
+    printf("\n=== EQUIVALENT DELTA RESISTANCES ===\n");
+    printf("Delta Resistance Ra (opposite to node 3): %.2f Ohms\n", ra);
+    printf("Delta Resistance Rb (opposite to node 1): %.2f Ohms\n", rb);
+    printf("Delta Resistance Rc (opposite to node 2): %.2f Ohms\n", rc);
+
+    return 0;
+}
