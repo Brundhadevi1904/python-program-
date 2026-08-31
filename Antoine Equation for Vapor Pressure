@@ -1,0 +1,27 @@
+#include <stdio.h>
+#include <math.h> // Required for pow()
+
+int main() {
+    float A, B, C, temperature, log_P, vapor_pressure;
+
+    printf("=== ANTOINE VAPOR PRESSURE ESTIMATOR ===\n");
+    printf("Enter Antoine Constants for your compound:\n");
+    printf("Constant A: "); scanf("%f", &A);
+    printf("Constant B: "); scanf("%f", &B);
+    printf("Constant C: "); scanf("%f", &C);
+
+    printf("Enter target system temperature (°C): ");
+    scanf("%f", &temperature);
+
+    // Antoine Equation calculation
+    log_P = A - (B / (C + temperature));
+    
+    // Vapor pressure P = 10^(log_P)
+    vapor_pressure = pow(10.0, log_P);
+
+    printf("\n=== THERMODYNAMIC PROPERTY ===\n");
+    printf("Vapor Pressure at %.2f°C = %.4f mmHg\n", temperature, vapor_pressure);
+    printf("In SI units               = %.4f kPa\n", vapor_pressure * 0.133322); // 1 mmHg = 0.133322 kPa
+
+    return 0;
+}
