@@ -1,0 +1,39 @@
+#include <stdio.h>
+
+int main() {
+    float kva_rating, iron_loss_w, copper_loss_w, load_fraction, power_factor;
+    float output_power, total_losses, input_power, efficiency;
+
+    printf("=== TRANSFORMER EFFICIENCY ESTIMATOR ===\n");
+    printf("Enter Transformer Rating in kVA: ");
+    scanf("%f", &kva_rating);
+
+    printf("Enter Constant Iron Losses (in Watts): ");
+    scanf("%f", &iron_loss_w);
+
+    printf("Enter Full-Load Copper Losses (in Watts): ");
+    scanf("%f", &copper_loss_w);
+
+    printf("Enter Operating Load Fraction (e.g., 1 for full load, 0.5 for half load): ");
+    scanf("%f", &load_fraction);
+
+    printf("Enter Operating Power Factor (cos phi): ");
+    scanf("%f", &power_factor);
+
+    // Convert kVA rating to Watts active output under fractional load
+    output_power = load_fraction * (kva_rating * 1000.0) * power_factor;
+
+    // Copper loss varies with the square of the operating load fraction
+    float current_copper_loss = (load_fraction * load_fraction) * copper_loss_w;
+    total_losses = iron_loss_w + current_copper_loss;
+
+    input_power = output_power + total_losses;
+    efficiency = (output_power / input_power) * 100.0;
+
+    printf("\n=== PERFORMANCE DATA ===\n");
+    printf("Current Output Power : %.2f Watts\n", output_power);
+    printf("Current Total Losses : %.2f Watts\n", total_losses);
+    printf("Calculated Efficiency: %.2f%%\n", efficiency);
+
+    return 0;
+}
