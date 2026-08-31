@@ -1,0 +1,39 @@
+#include <stdio.h>
+
+int main() {
+    float x1, x2;                  // Liquid phase mole fractions
+    float P1_sat, P2_sat;          // Vapor pressures of pure components (in kPa)
+    float total_pressure, y1, y2;  // Vapor phase mole fractions
+
+    printf("=== BINARY VAPOR-LIQUID EQUILIBRIUM (RAOULT'S LAW) ===\n");
+    printf("Enter liquid mole fraction of Component 1 (x1, between 0 and 1): ");
+    scanf("%f", &x1);
+
+    if (x1 < 0.0 || x1 > 1.0) {
+        printf("Error! Mole fraction must be between 0 and 1.\n");
+        return 1;
+    }
+
+    // Since it's a binary mixture, x1 + x2 = 1
+    x2 = 1.0 - x1;
+
+    printf("Enter saturation vapor pressure of Component 1 (P1 sat in kPa): ");
+    scanf("%f", &P1_sat);
+    
+    printf("Enter saturation vapor pressure of Component 2 (P2 sat in kPa): ");
+    scanf("%f", &P2_sat);
+
+    // Calculate Total Bubble Pressure: P = x1*P1_sat + x2*P2_sat
+    total_pressure = (x1 * P1_sat) + (x2 * P2_sat);
+
+    // Calculate Vapor Phase Composition: y_i = (x_i * P_i_sat) / P
+    y1 = (x1 * P1_sat) / total_pressure;
+    y2 = 1.0 - y1;
+
+    printf("\n=== EQUILIBRIUM RESULTS ===\n");
+    printf("Liquid Phase: x1 = %.3f, x2 = %.3f\n", x1, x2);
+    printf("Total Bubble Point Pressure = %.2f kPa\n", total_pressure);
+    printf("Vapor Phase : y1 = %.3f, y2 = %.3f\n", y1, y2);
+
+    return 0;
+}
