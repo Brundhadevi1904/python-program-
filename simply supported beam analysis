@@ -1,0 +1,23 @@
+#include <stdio.h>
+
+int main() {
+    float length, udl;
+    float max_bending_moment, max_shear_force;
+
+    printf("=== SIMPLY SUPPORTED BEAM ANALYZER (UDL) ===\n");
+    printf("Enter the span length of the beam (in meters): ");
+    scanf("%f", &length);
+
+    printf("Enter the Uniformly Distributed Load (in kN/m): ");
+    scanf("%f", &udl);
+
+    // Formulations for a standard structural beam
+    max_shear_force = (udl * length) / 2.0;
+    max_bending_moment = (udl * length * length) / 8.0;
+
+    printf("\n=== DESIGN FORCES ===\n");
+    printf("Maximum Shear Force (V_max)      = %.2f kN\n", max_shear_force);
+    printf("Maximum Bending Moment (M_max)  = %.2f kN-m\n", max_bending_moment);
+
+    return 0;
+}
